@@ -1,12 +1,9 @@
 package com.innowise.orderservice.apigateway.config;
 
-import com.innowise.orderservice.apigateway.util.JwtAuthFilter;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class GatewayConfig {
@@ -26,11 +23,6 @@ public class GatewayConfig {
                         .path("/cards/**")
                         .uri("http://localhost:8081"))
                 .build();
-    }
-
-    @Bean
-    public GlobalFilter customFilter(WebClient.Builder builder) {
-        return new JwtAuthFilter(builder);
     }
 
 }

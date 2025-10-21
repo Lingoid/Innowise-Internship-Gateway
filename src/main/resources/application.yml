@@ -3,6 +3,10 @@ spring:
     name: api-gateway
 
 server:
-  port: 8083
+  port: ${GATEWAY_PORT}
+
+auth:
+  service:
+    url: ${VALIDATE_TOKEN_REQUEST_URL}
 
 

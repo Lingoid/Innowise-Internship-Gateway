@@ -1,6 +1,7 @@
 package com.innowise.orderservice.apigateway.util;
 
-import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -14,10 +15,16 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class JwtAuthFilter implements GlobalFilter, Ordered {
 
     private final WebClient.Builder webClientBuilder;
+
+    public JwtAuthFilter(WebClient.Builder webClientBuilder){
+        this.webClientBuilder = webClientBuilder;
+    }
+
+    @Value("${auth.service.url}")
+    private String validateTokenUrl;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -31,7 +38,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
         return webClientBuilder.build()
                 .post()
-                .uri("http://localhost:8080/auth/validate")
+                .uri(validateTokenUrl)
                 .header(HttpHeaders.AUTHORIZATION, authHeader)
                 .retrieve()
                 .bodyToMono(Map.class)

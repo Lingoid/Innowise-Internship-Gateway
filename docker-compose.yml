@@ -1,0 +1,11 @@
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_gateway_app
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
+

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: ${GATEWAY_PORT}
+
+auth:
+  service:
+    url: ${VALIDATE_TOKEN_REQUEST_URL}
+
+
